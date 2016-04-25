@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>YOYO Dev Technical Test</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+</head>
+<body ng-app="noteApp">
+  <div ng-controller="noteCtrl">
+    <h3>Dead-Simple-Note App</h3>
+
+    <textarea ng-model="new_note" placeholder="Insert text here"></textarea>
+    <button ng-click="submit()">Submit</button>
+
+    <select ng-model="filter" ng-options="x.value as x.name for x in filter_options">
+        <option value="" selected="selected">--Select Filter--</option>
+    </select>
+
+    <table border="1">
+      <tr><td>Your Notes</td></tr>
+      <tr ng-repeat="x in notes">
+        <td ng-show="x.is_todo == filter || filter == null">
+          <input type="checkbox" ng-show="x.is_todo" ng-checked="x.is_done" ng-click="update(x)"/>
+          <span ng-bind="x.note"></span>
+
+          <a href="#" ng-click="edit(x)" ng-show="!x.is_editing"><small>Edit</small></a>
+          <a href="#" ng-click="update(x, 1)" ng-show="x.is_editing"><small>Update</small></a>
+
+          <a href="#" ng-click="make_todo(x)" ng-show="!x.is_todo"><small>Make Todo</small></a>
+          <a href="#" ng-click="make_note(x)" ng-show="x.is_todo"><small>Convert to Note</small></a>
+
+          <a href="#" ng-click="delete(x)"><small>Delete</small></a>
+        </td>
+      </tr>
+    </table>
+
+    <small>Edit the textbox below and click update on the table above to update notes</small><br>
+    <textarea ng-model="note"></textarea>
+  </div>
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
